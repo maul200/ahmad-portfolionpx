@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { AnimatePresence } from "framer-motion";
 import { MissionControl } from "@/components/workspaces/MissionControl";
 import { SystemsArchive } from "@/components/workspaces/SystemsArchive";
@@ -10,6 +10,24 @@ import { Contact } from "@/components/workspaces/Contact";
 
 export function OSShell() {
   const [activeTab, setActiveTab] = useState("mission-control");
+  const navRef = useRef<HTMLElement>(null);
+  const [showScrollHint, setShowScrollHint] = useState(false);
+
+  // Fungsi untuk mengecek apakah konten meluber (overflow) dan perlu panah
+  const checkScroll = () => {
+    if (navRef.current) {
+      const { scrollWidth, clientWidth, scrollLeft } = navRef.current;
+      // Munculkan panah JIKA konten lebih lebar dari layar DAN belum mentok kanan
+      setShowScrollHint(scrollWidth > clientWidth && scrollLeft < scrollWidth - clientWidth - 5);
+    }
+  };
+
+  // Cek saat pertama kali dimuat & saat ukuran layar berubah
+  useEffect(() => {
+    checkScroll();
+    window.addEventListener("resize", checkScroll);
+    return () => window.removeEventListener("resize", checkScroll);
+  }, []);
 
   // Tombol navigasi untuk Sidebar Desktop
   const NavButton = ({ id, label }: { id: string; label: string }) => {
@@ -98,7 +116,6 @@ export function OSShell() {
           </aside>
 
           {/* Dynamic Workspace */}
-          {/* Tambahan: flex-1 agar di mobile mengambil sisa ruang vertikal */}
           <main className="flex-1 p-5 md:p-8 lg:p-10 bg-black/20 overflow-y-auto custom-scrollbar relative">
             <AnimatePresence mode="wait">
               {activeTab === "mission-control" && <MissionControl />}
@@ -110,13 +127,31 @@ export function OSShell() {
           </main>
 
           {/* Taskbar Bottom (Hanya tampil di layar kecil / mobile) */}
-          <nav className="lg:hidden flex items-center gap-2 p-3 border-t border-white/10 bg-white/[0.02] overflow-x-auto custom-scrollbar shrink-0">
-            <MobileNavButton id="mission-control" label="Mission" />
-            <MobileNavButton id="profile" label="Profile" />
-            <MobileNavButton id="systems-archive" label="Systems" />
-            <MobileNavButton id="experience-log" label="Logs" />
-            <MobileNavButton id="contact" label="Comms" />
-          </nav>
+          <div className="lg:hidden relative border-t border-white/10 bg-[#050505] overflow-hidden shrink-0">
+            <nav 
+              ref={navRef}
+              onScroll={checkScroll}
+              className="flex items-center gap-2 p-3 overflow-x-auto custom-scrollbar relative z-10"
+            >
+              <MobileNavButton id="mission-control" label="Mission" />
+              <MobileNavButton id="profile" label="Profile" />
+              <MobileNavButton id="systems-archive" label="Systems" />
+              <MobileNavButton id="experience-log" label="Logs" />
+              <MobileNavButton id="contact" label="Comms" />
+              
+              {/* Spacer ekstra di akhir agar ada sedikit margin saat mentok kanan */}
+              <div className="min-w-[4px] shrink-0" />
+            </nav>
+
+            {/* UX Scroll Hint: Pintar (Opacity menyesuaikan state showScrollHint) */}
+            <div 
+              className={`absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#050505] via-[#050505]/80 to-transparent pointer-events-none z-20 flex items-center justify-end pr-2 transition-opacity duration-300 ${
+                showScrollHint ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              <span className="text-slate-500 text-sm animate-pulse">»</span>
+            </div>
+          </div>
 
         </div>
       </div>

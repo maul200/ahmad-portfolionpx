@@ -21,17 +21,20 @@ export const Profile = () => (
             Identity Matrix
           </h3>
           <div className="space-y-4 font-mono text-xs md:text-sm">
-            <div className="grid grid-cols-[140px_1fr] gap-4">
+            {/* Lebar kolom kiri dikurangi jadi 120px di mobile agar kolom kanan lebih lega */}
+            <div className="grid grid-cols-[120px_1fr] md:grid-cols-[140px_1fr] gap-2 md:gap-4">
               <span className="text-slate-500">NAME:</span>
               <span className="text-slate-300">Ahmad Mauluddin</span>
             </div>
-            <div className="grid grid-cols-[140px_1fr] gap-4">
+            <div className="grid grid-cols-[120px_1fr] md:grid-cols-[140px_1fr] gap-2 md:gap-4">
               <span className="text-slate-500">DESIGNATION:</span>
               <span className="text-slate-300">Software Engineering</span>
             </div>
-            <div className="grid grid-cols-[140px_1fr] gap-4">
+            <div className="grid grid-cols-[120px_1fr] md:grid-cols-[140px_1fr] gap-2 md:gap-4">
               <span className="text-slate-500">EX-AFFILIATION:</span>
-              <span className="text-slate-300 whitespace-nowrap">Universitas Lampung (22-26)</span>
+              <span className="text-slate-300">
+                Universitas Lampung <sup className="text-slate-500 text-[10px] ml-0.5">(22-26)</sup>
+              </span>
             </div>
           </div>
         </div>
