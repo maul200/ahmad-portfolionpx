@@ -20,22 +20,34 @@ export const Profile = () => (
           <h3 className="text-[10px] font-mono uppercase tracking-widest text-slate-500 mb-6 border-b border-white/10 pb-2">
             Identity Matrix
           </h3>
-          <div className="space-y-4 font-mono text-xs md:text-sm">
-            {/* Lebar kolom kiri dikurangi jadi 120px di mobile agar kolom kanan lebih lega */}
+          <div className="space-y-4 font-mono">
             <div className="grid grid-cols-[120px_1fr] md:grid-cols-[140px_1fr] gap-2 md:gap-4">
-              <span className="text-slate-500">NAME:</span>
-              <span className="text-slate-300">Ahmad Mauluddin</span>
-            </div>
-            <div className="grid grid-cols-[120px_1fr] md:grid-cols-[140px_1fr] gap-2 md:gap-4">
-              <span className="text-slate-500">DESIGNATION:</span>
-              <span className="text-slate-300">Software Engineering</span>
-            </div>
-            <div className="grid grid-cols-[120px_1fr] md:grid-cols-[140px_1fr] gap-2 md:gap-4">
-              <span className="text-slate-500">EX-AFFILIATION:</span>
-              <span className="text-slate-300">
-                Universitas Lampung <sup className="text-slate-500 text-[10px] ml-0.5">(22-26)</sup>
+              <span className="text-slate-500 text-xs">NAME:</span>
+              <span className="text-slate-300 text-xs md:text-sm">
+                Ahmad Mauluddin
               </span>
             </div>
+            <div className="grid grid-cols-[120px_1fr] md:grid-cols-[140px_1fr] gap-2 md:gap-4">
+              <span className="text-slate-500 text-xs">DESIGNATION:</span>
+              <span className="text-slate-300 text-xs md:text-sm">
+                Software Engineering
+              </span>
+            </div>
+            <div className="grid grid-cols-[120px_1fr] md:grid-cols-[140px_1fr] gap-2 md:gap-4 items-start">
+  {/* Tambahan pt-0.5 biar sejajar sempurna dengan huruf U di sebelahnya */}
+  <div className="text-slate-500 text-xs pt-0.5">
+    EX-AFFILIATION:
+  </div>
+  
+  {/* -mb-2 adalah kunci utama: menyedot spasi ekstra di mobile agar kotak tidak melar */}
+  <div className="text-slate-300 text-xs md:text-sm -mb-2 md:mb-0">
+    Universitas Lampung
+    {/* Di mobile dipaksa jadi block (turun baris). Di desktop jadi pangkat (align-super) */}
+    <span className="block md:inline-block md:align-super text-slate-500 text-[10px] md:ml-0.5 leading-none mt-0.5 md:mt-0">
+      (22-26)
+    </span>
+  </div>
+</div>
           </div>
         </div>
 
@@ -43,10 +55,11 @@ export const Profile = () => (
           <h3 className="text-[10px] font-mono uppercase tracking-widest text-slate-500 mb-6 border-b border-white/10 pb-2">
             Core Competencies
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-2">
             <div>
               <p className="text-slate-500 font-mono text-xs mb-3">TOOLS</p>
-              <ul className="text-slate-300 font-mono text-xs md:text-sm space-y-2">
+              {/* KEMBALI KE whitespace-nowrap murni agar mengunci lebar minimal div dan tidak melar */}
+              <ul className="text-slate-300 font-mono text-xs md:text-sm space-y-2 whitespace-nowrap">
                 <li>{">"} Figma</li>
                 <li>{">"} Power Designer</li>
                 <li>{">"} MySQL</li>
@@ -54,8 +67,11 @@ export const Profile = () => (
               </ul>
             </div>
             <div>
-              <p className="text-slate-500 font-mono text-xs mb-3">RESEARCH & METHOD</p>
-              <ul className="text-slate-300 font-mono text-xs md:text-sm space-y-2">
+              <p className="text-slate-500 font-mono text-xs mb-3">
+                RESEARCH & METHOD
+              </p>
+              {/* KEMBALI KE whitespace-nowrap murni agar mengunci lebar minimal div dan tidak melar */}
+              <ul className="text-slate-300 font-mono text-xs md:text-sm space-y-2 whitespace-nowrap">
                 <li>{">"} Data Structure</li>
                 <li>{">"} Database Modeling</li>
                 <li>{">"} Usability Heuristics</li>

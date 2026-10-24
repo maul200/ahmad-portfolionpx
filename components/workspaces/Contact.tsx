@@ -45,12 +45,12 @@ export const Contact = () => (
           </a>
 
           {/* LINKEDIN */}
-          <a href="https://linkedin.com/in/ahm.mauluddin" target="_blank" rel="noreferrer" className="block w-full p-3 md:p-4 border border-white/10 rounded-lg bg-white/[0.01] hover:bg-white/[0.05] hover:border-slate-400 transition-all group flex items-center justify-between gap-2">
+          <a href="https://linkedin.com/in/ahmadmauluddin" target="_blank" rel="noreferrer" className="block w-full p-3 md:p-4 border border-white/10 rounded-lg bg-white/[0.01] hover:bg-white/[0.05] hover:border-slate-400 transition-all group flex items-center justify-between gap-2">
             <div className="flex items-center gap-3 md:gap-4 overflow-hidden">
               <span className="text-slate-500 group-hover:text-[#0A66C2] transition-colors shrink-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
               </span>
-              <span className="text-slate-300 text-[10px] md:text-sm font-mono truncate">/in/ahm.mauluddin</span>
+              <span className="text-slate-300 text-[10px] md:text-sm font-mono truncate">/in/ahmadmauluddin</span>
             </div>
             <span className="text-[8px] md:text-[10px] font-mono text-slate-600 group-hover:text-slate-400 tracking-wide md:tracking-widest shrink-0">[CONNECT]</span>
           </a>
