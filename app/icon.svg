@@ -1,0 +1,10 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="128" cy="128" r="128" fill="black"/>
+  <defs>
+    <linearGradient id="am-gradient" x1="128" y1="88" x2="128" y2="168" gradientUnits="userSpaceOnUse">
+      <stop stop-color="white"/>
+      <stop offset="1" stop-color="#999999"/>
+    </linearGradient>
+  </defs>
+  <path d="M85 88 L51 168 L69 168 L85 130 L101 168 L119 168 Z M127 168 L127 88 L145 88 L165 130 L185 88 L203 88 L203 168 L185 168 L185 122 L165 160 L145 122 L145 168 Z" fill="url(#am-gradient)"/>
+</svg>
