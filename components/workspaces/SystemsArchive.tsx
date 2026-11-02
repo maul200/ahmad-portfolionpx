@@ -1,5 +1,8 @@
+"use client";
+
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { TypewriterHeader } from "@/components/ui/TypewriterHeader";
 
 const systemRecords = [
   {
@@ -44,9 +47,8 @@ export const SystemsArchive = () => {
       transition={{ duration: 0.2 }}
       className="flex flex-col gap-6"
     >
-      <p className="text-xs text-slate-500 font-mono tracking-widest">
-        ACTIVE WORKSPACE // SYSTEMS_ARCHIVE
-      </p>
+      {/* Memanggil Animasi Mesin Tik dengan 1 baris bersih */}
+      <TypewriterHeader text="ACTIVE WORKSPACE // SYSTEMS_ARCHIVE" />
 
       <div className="border border-white/10 rounded-xl bg-white/[0.02] flex-1 overflow-hidden flex flex-col">
         <div className="p-4 border-b border-white/10 bg-white/[0.01]">
@@ -80,7 +82,6 @@ export const SystemsArchive = () => {
                     </span>
                   </div>
                   <div className="flex items-center gap-2 md:gap-3 shrink-0">
-                    {/* Mengubah kata DEPLOYED menjadi URL saat div terbuka */}
                     {isExpanded && record.url ? (
                       <a
                         href={record.url}

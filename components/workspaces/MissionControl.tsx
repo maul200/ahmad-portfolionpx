@@ -1,3 +1,6 @@
+"use client";
+
+import { TypewriterHeader } from "@/components/ui/TypewriterHeader";
 import { motion } from "framer-motion";
 
 export const MissionControl = () => (
@@ -9,9 +12,7 @@ export const MissionControl = () => (
     transition={{ duration: 0.2 }}
     className="flex flex-col gap-6"
   >
-    <p className="text-xs text-slate-500 font-mono tracking-widest">
-      ACTIVE WORKSPACE // MISSION_CONTROL
-    </p>
+    <TypewriterHeader text="ACTIVE WORKSPACE // MISSION_CONTROL" />
 
     {/* Row Atas: Status & Mission */}
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-2">
