@@ -8,6 +8,51 @@ import { Profile } from "@/components/workspaces/Profile";
 import { ExperienceLog } from "@/components/workspaces/ExperienceLog";
 import { Contact } from "@/components/workspaces/Contact";
 
+// --- KOMPONEN BANTUAN DI LUAR FUNGSI UTAMA ---
+// Dipindahkan ke sini agar tidak terre-start (re-mount) saat user pindah tab menu
+
+const SidebarHeader = ({ title, elRef }: { title: string, elRef: any }) => (
+  <p className="text-[10px] font-mono uppercase tracking-widest text-slate-500 mb-3 px-2 flex items-center gap-2">
+    <motion.span
+      initial={{ color: "#64748b" }}
+      animate={{ color: ["#64748b", "#4ade80", "#4ade80", "#64748b"] }}
+      transition={{ duration: 1.5, times: [0, 0.01, 0.8, 1], delay: 5 }} 
+      className="flex items-center gap-2"
+    >
+      <span ref={elRef} className="inline-block leading-none">▼</span>
+      <span>{title}</span>
+    </motion.span>
+  </p>
+);
+
+const NavButton = ({ label, isActive, onClick }: { label: string, isActive: boolean, onClick: () => void }) => (
+  <button
+    onClick={onClick}
+    className={`w-full text-left rounded-md px-3 py-1.5 text-sm transition-all duration-200 ${
+      isActive
+        ? "bg-white/10 text-white font-medium pl-4"
+        : "text-slate-400 hover:bg-white/5 hover:text-slate-200 hover:pl-4"
+    }`}
+  >
+    {label}
+  </button>
+);
+
+const MobileNavButton = ({ label, isActive, onClick }: { label: string, isActive: boolean, onClick: () => void }) => (
+  <button
+    onClick={onClick}
+    className={`whitespace-nowrap rounded-md px-4 py-2 text-[10px] font-mono transition-all duration-200 uppercase tracking-wider ${
+      isActive
+        ? "bg-white/10 text-white border border-white/20"
+        : "text-slate-400 hover:bg-white/5 hover:text-slate-200 border border-transparent"
+    }`}
+  >
+    {label}
+  </button>
+);
+
+// --- FUNGSI UTAMA HALAMAN ---
+
 export function OSShell() {
   const [activeTab, setActiveTab] = useState("mission-control");
   const navRef = useRef<HTMLElement>(null);
@@ -16,7 +61,6 @@ export function OSShell() {
   const [isCVOpen, setIsCVOpen] = useState(false);
   const [cvOrigin, setCvOrigin] = useState({ x: 0, y: 0 });
 
-  // REFS UNTUK MEMBACA KOORDINAT SEGITIGA STATIS
   const coreRef = useRef<HTMLSpanElement>(null);
   const recordsRef = useRef<HTMLSpanElement>(null);
   const externalRef = useRef<HTMLSpanElement>(null);
@@ -35,7 +79,6 @@ export function OSShell() {
     return () => window.removeEventListener("resize", checkScroll);
   }, []);
 
-  // Membaca posisi pasti dari 3 segitiga di sidebar untuk titik pendaratan
   useEffect(() => {
     const getPoints = () => {
       if (window.innerWidth >= 1024) {
@@ -66,54 +109,6 @@ export function OSShell() {
     setCvOrigin({ x: startX, y: startY });
     setIsCVOpen(true);
   };
-
-  const NavButton = ({ id, label }: { id: string; label: string }) => {
-    const isActive = activeTab === id;
-    return (
-      <button
-        onClick={() => setActiveTab(id)}
-        className={`w-full text-left rounded-md px-3 py-1.5 text-sm transition-all duration-200 ${
-          isActive
-            ? "bg-white/10 text-white font-medium pl-4"
-            : "text-slate-400 hover:bg-white/5 hover:text-slate-200 hover:pl-4"
-        }`}
-      >
-        {label}
-      </button>
-    );
-  };
-
-  const MobileNavButton = ({ id, label }: { id: string; label: string }) => {
-    const isActive = activeTab === id;
-    return (
-      <button
-        onClick={() => setActiveTab(id)}
-        className={`whitespace-nowrap rounded-md px-4 py-2 text-[10px] font-mono transition-all duration-200 uppercase tracking-wider ${
-          isActive
-            ? "bg-white/10 text-white border border-white/20"
-            : "text-slate-400 hover:bg-white/5 hover:text-slate-200 border border-transparent"
-        }`}
-      >
-        {label}
-      </button>
-    );
-  };
-
-  // KOMPONEN: Header Statis yang selalu ada & Menyala seketika di Detik ke-5
-  const SidebarHeader = ({ title, elRef }: { title: string, elRef: any }) => (
-    <p className="text-[10px] font-mono uppercase tracking-widest text-slate-500 mb-3 px-2 flex items-center gap-2">
-      <motion.span
-        initial={{ color: "#64748b" }}
-        animate={{ color: ["#64748b", "#4ade80", "#4ade80", "#64748b"] }}
-        // times 0.01 berarti dalam sepersekian detik setelah delay 5s selesai, warnanya langsung "jederrr" hijau
-        transition={{ duration: 1.5, times: [0, 0.01, 0.8, 1], delay: 5 }} 
-        className="flex items-center gap-2"
-      >
-        <span ref={elRef} className="inline-block leading-none">▼</span>
-        <span>{title}</span>
-      </motion.span>
-    </p>
-  );
 
   return (
     <>
@@ -150,23 +145,23 @@ export function OSShell() {
               <div>
                 <SidebarHeader title="Core" elRef={coreRef} />
                 <div className="space-y-0.5">
-                  <NavButton id="mission-control" label="Mission Control" />
-                  <NavButton id="profile" label="Profile" />
+                  <NavButton label="Mission Control" isActive={activeTab === "mission-control"} onClick={() => setActiveTab("mission-control")} />
+                  <NavButton label="Profile" isActive={activeTab === "profile"} onClick={() => setActiveTab("profile")} />
                 </div>
               </div>
 
               <div>
                 <SidebarHeader title="Records" elRef={recordsRef} />
                 <div className="space-y-0.5">
-                  <NavButton id="systems-archive" label="Systems Archive" />
-                  <NavButton id="experience-log" label="Experience Log" />
+                  <NavButton label="Systems Archive" isActive={activeTab === "systems-archive"} onClick={() => setActiveTab("systems-archive")} />
+                  <NavButton label="Experience Log" isActive={activeTab === "experience-log"} onClick={() => setActiveTab("experience-log")} />
                 </div>
               </div>
 
               <div>
                 <SidebarHeader title="External" elRef={externalRef} />
                 <div className="space-y-0.5">
-                  <NavButton id="contact" label="Contact Link" />
+                  <NavButton label="Contact Link" isActive={activeTab === "contact"} onClick={() => setActiveTab("contact")} />
                 </div>
               </div>
 
@@ -175,7 +170,7 @@ export function OSShell() {
                   onClick={handleOpenCV}
                   className="w-full flex items-center justify-between bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-md px-3 py-2 text-xs font-mono text-slate-300 transition-all group relative overflow-hidden"
                 >
-                  <span className="relative z-10">VIEW_CV.EXE</span>
+                  <span className="relative z-10">VIEW_CV</span>
                   <span className="relative z-10 group-hover:scale-125 transition-transform duration-300">↗</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/5 to-white/0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
                 </button>
@@ -196,11 +191,11 @@ export function OSShell() {
             {/* Taskbar Bottom Mobile */}
             <div className="lg:hidden relative border-t border-white/10 bg-[#050505] overflow-hidden shrink-0">
               <nav ref={navRef} onScroll={checkScroll} className="flex items-center gap-2 p-3 overflow-x-auto custom-scrollbar relative z-10">
-                <MobileNavButton id="mission-control" label="Mission" />
-                <MobileNavButton id="profile" label="Profile" />
-                <MobileNavButton id="systems-archive" label="Systems" />
-                <MobileNavButton id="experience-log" label="Logs" />
-                <MobileNavButton id="contact" label="Comms" />
+                <MobileNavButton label="Mission" isActive={activeTab === "mission-control"} onClick={() => setActiveTab("mission-control")} />
+                <MobileNavButton label="Profile" isActive={activeTab === "profile"} onClick={() => setActiveTab("profile")} />
+                <MobileNavButton label="Systems" isActive={activeTab === "systems-archive"} onClick={() => setActiveTab("systems-archive")} />
+                <MobileNavButton label="Logs" isActive={activeTab === "experience-log"} onClick={() => setActiveTab("experience-log")} />
+                <MobileNavButton label="Comms" isActive={activeTab === "contact"} onClick={() => setActiveTab("contact")} />
                 <div className="min-w-[4px] shrink-0" />
               </nav>
               <div className={`absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#050505] via-[#050505]/80 to-transparent pointer-events-none z-20 flex items-center justify-end pr-2 transition-opacity duration-300 ${showScrollHint ? "opacity-100" : "opacity-0"}`}>
@@ -211,11 +206,11 @@ export function OSShell() {
         </div>
       </section>
 
-      {/* --- EFEK SERPIHAN SEGITIGA BEBAS MENGELILINGI LAYAR DESKTOP (BERAKHIR DI MENU) --- */}
+      {/* --- EFEK SERPIHAN SEGITIGA BEBAS MENGELILINGI LAYAR DESKTOP --- */}
       {animPoints && (
         <div className="fixed inset-0 pointer-events-none z-[50] hidden lg:block overflow-hidden">
           
-          {/* Segitiga Menu CORE: Muncul dari Pojok Kanan Atas */}
+          {/* Segitiga Menu CORE */}
           {animPoints.core && (
             <motion.div
               className="absolute text-slate-400 font-mono text-[10px] leading-none"
@@ -225,15 +220,18 @@ export function OSShell() {
                 y: [animPoints.h * 0.1, animPoints.h * 0.8, animPoints.h * 0.5, animPoints.core.top],
                 rotate: [0, 360, -720, 1080],
                 scale: [3, 4, 1.5, 1],
-                opacity: [0, 1, 1, 0] // Menghilang begitu menyatu dengan titik aslinya di detik ke-5
+                opacity: [0, 1, 1, 1, 0] 
               }}
-              transition={{ duration: 5, ease: "easeInOut" }}
+              transition={{ 
+                default: { duration: 5, ease: "easeInOut" },
+                opacity: { duration: 5, times: [0, 0.05, 0.99, 1] } 
+              }}
             >
               ▼
             </motion.div>
           )}
 
-          {/* Segitiga Menu RECORDS: Muncul dari Pojok Kiri Bawah */}
+          {/* Segitiga Menu RECORDS */}
           {animPoints.records && (
             <motion.div
               className="absolute text-slate-400 font-mono text-[10px] leading-none"
@@ -243,15 +241,18 @@ export function OSShell() {
                 y: [animPoints.h * 0.9, animPoints.h * 0.2, animPoints.h * 0.7, animPoints.records.top],
                 rotate: [0, -360, 720, -1080],
                 scale: [3, 5, 2, 1],
-                opacity: [0, 1, 1, 0]
+                opacity: [0, 1, 1, 1, 0]
               }}
-              transition={{ duration: 5, ease: "easeInOut" }}
+              transition={{ 
+                default: { duration: 5, ease: "easeInOut" },
+                opacity: { duration: 5, times: [0, 0.05, 0.99, 1] } 
+              }}
             >
               ▼
             </motion.div>
           )}
 
-          {/* Segitiga Menu EXTERNAL: Muncul dari Kanan Bawah */}
+          {/* Segitiga Menu EXTERNAL */}
           {animPoints.external && (
             <motion.div
               className="absolute text-slate-400 font-mono text-[10px] leading-none"
@@ -261,9 +262,12 @@ export function OSShell() {
                 y: [animPoints.h * 0.9, animPoints.h * 0.5, animPoints.h * 0.1, animPoints.external.top],
                 rotate: [0, 720, -360, 720],
                 scale: [3, 2, 4, 1],
-                opacity: [0, 1, 1, 0]
+                opacity: [0, 1, 1, 1, 0]
               }}
-              transition={{ duration: 5, ease: "easeInOut" }}
+              transition={{ 
+                default: { duration: 5, ease: "easeInOut" },
+                opacity: { duration: 5, times: [0, 0.05, 0.99, 1] } 
+              }}
             >
               ▼
             </motion.div>
