@@ -7,6 +7,7 @@ import { TypewriterHeader } from "@/components/ui/TypewriterHeader";
 const systemRecords = [
   {
     id: "PJT-01",
+    role: "FULLSTACK", // Tambahan label role
     name: "Trefa+ Volunteer Web",
     client: "Kanwil DJPb Prov. Lampung",
     tech: ["Laravel", "Tailwind CSS", "MySQL"],
@@ -17,6 +18,7 @@ const systemRecords = [
   },
   {
     id: "PJT-02",
+    role: "FRONTEND", // Tambahan label role
     name: "Unila Attendance Web",
     client: "UPA TIK Universitas Lampung",
     tech: ["Laravel", "Tailwind CSS", "Kanban"],
@@ -26,6 +28,7 @@ const systemRecords = [
   },
   {
     id: "PJT-03",
+    role: "TEAM", // Tambahan label role
     name: "Seril (Sistem Terintegrasi LKPD Lampung)",
     client: "Kanwil DJPb Prov. Lampung",
     tech: ["Visual Basic for Application", "Macro"],
@@ -47,7 +50,6 @@ export const SystemsArchive = () => {
       transition={{ duration: 0.2 }}
       className="flex flex-col gap-6"
     >
-      {/* Memanggil Animasi Mesin Tik dengan 1 baris bersih */}
       <TypewriterHeader text="ACTIVE WORKSPACE // SYSTEMS_ARCHIVE" />
 
       <div className="border border-white/10 rounded-xl bg-white/[0.02] flex-1 overflow-hidden flex flex-col">
@@ -75,7 +77,8 @@ export const SystemsArchive = () => {
                 >
                   <div className="flex items-center gap-2 md:gap-4 flex-1 min-w-0">
                     <span className="text-[10px] md:text-xs font-mono text-slate-500 shrink-0">
-                      [{record.id}]
+                      {/* Logika perubahan teks ID ke Role saat diklik */}
+                      [{isExpanded ? record.role : record.id}]
                     </span>
                     <span className="text-xs md:text-sm font-medium text-slate-200 truncate">
                       {record.name}
@@ -98,9 +101,15 @@ export const SystemsArchive = () => {
                         {record.status}
                       </span>
                     )}
-                    <span className="text-slate-500 text-[10px] md:text-xs w-4 text-center">
+                    
+                    <motion.span 
+                      initial={{ color: "#64748b" }}
+                      animate={{ color: ["#64748b", "#4ade80", "#64748b"] }}
+                      transition={{ duration: 1, repeat: 2 }}
+                      className="text-[10px] md:text-xs w-4 text-center"
+                    >
                       {isExpanded ? "▲" : "▼"}
-                    </span>
+                    </motion.span>
                   </div>
                 </button>
 
