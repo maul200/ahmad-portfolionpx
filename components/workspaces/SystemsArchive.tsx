@@ -7,10 +7,10 @@ import { TypewriterHeader } from "@/components/ui/TypewriterHeader";
 const systemRecords = [
   {
     id: "PJT-01",
-    role: "FULLSTACK", // Tambahan label role
+    role: "FULLSTACK",
     name: "Trefa+ Volunteer Web",
     client: "Kanwil DJPb Prov. Lampung",
-    tech: ["Laravel", "Tailwind CSS", "MySQL"],
+    tech: ["Laravel", "Tailwind CSS", "Cloudinary"],
     status: "DEPLOYED",
     url: "https://relawantrefa.com",
     urlLabel: "relawantrefa.com",
@@ -18,25 +18,56 @@ const systemRecords = [
   },
   {
     id: "PJT-02",
-    role: "FRONTEND", // Tambahan label role
+    role: "FRONTEND",
     name: "Unila Attendance Web",
     client: "UPA TIK Universitas Lampung",
     tech: ["Laravel", "Tailwind CSS", "Kanban"],
-    status: "STABLE",
+    status: "INTERNAL",
     url: null,
     logs: "Developed front-end for internal attendance website based on UI/UX specs in a 3-month period. Managed workflows using Taiga Kanban and controlled code versions with GitHub."
   },
   {
     id: "PJT-03",
-    role: "TEAM", // Tambahan label role
+    role: "TEAM",
     name: "Seril (Sistem Terintegrasi LKPD Lampung)",
     client: "Kanwil DJPb Prov. Lampung",
     tech: ["Visual Basic for Application", "Macro"],
-    status: "STABLE",
+    status: "INTERNAL",
     url: null,
     logs: "Enhanced Excel VBA-based reporting system (v1.2–v1.3) to consolidate LRA from 15 regional governments into Central Govt worksheets. Successfully disseminated to 40+ treasury officials."
+  },
+  {
+    id: "PJT-04",
+    role: "THIS SYSTEM",
+    name: "AM.OS Portfolio",
+    client: "Personal Project",
+    tech: ["Next.js", "TypeScript", "Framer Motion"],
+    status: "DEPLOYED",
+    url: null,
+    logs: "Architected an interactive OS-inspired developer portfolio featuring dynamic SVG circuit data streams, viewport-triggered micro-interactions, and responsive workspaces."
+  },
+  {
+    id: "PJT-05",
+    role: "FULLSTACK",
+    name: "WMI Company Profile Web",
+    client: "Wahana Mitra Indonesia Group",
+    tech: ["Next.js", "Prisma", "PostgreSQL"],
+    status: "IN PROGRESS",
+    url: null,
+    logs: "Coming soon."
   }
 ];
+
+const getStatusBadgeStyle = (status: string) => {
+  switch (status) {
+    case "INTERNAL":
+      return "bg-slate-500/10 text-slate-300 border-slate-500/20";
+    case "IN PROGRESS":
+      return "bg-amber-500/10 text-amber-400 border-amber-500/20";
+    default:
+      return "bg-green-500/10 text-green-400 border-green-500/20";
+  }
+};
 
 export const SystemsArchive = () => {
   const [expandedId, setExpandedId] = useState<string | null>(null);
@@ -77,7 +108,6 @@ export const SystemsArchive = () => {
                 >
                   <div className="flex items-center gap-2 md:gap-4 flex-1 min-w-0">
                     <span className="text-[10px] md:text-xs font-mono text-slate-500 shrink-0">
-                      {/* Logika perubahan teks ID ke Role saat diklik */}
                       [{isExpanded ? record.role : record.id}]
                     </span>
                     <span className="text-xs md:text-sm font-medium text-slate-200 truncate">
@@ -97,12 +127,16 @@ export const SystemsArchive = () => {
                         <span className="text-[8px]">↗</span>
                       </a>
                     ) : (
-                      <span className="text-[8px] md:text-[10px] font-mono px-1.5 md:px-2 py-0.5 md:py-1 rounded bg-green-500/10 text-green-400 border border-green-500/20">
+                      <span
+                        className={`text-[8px] md:text-[10px] font-mono px-1.5 md:px-2 py-0.5 md:py-1 rounded border ${getStatusBadgeStyle(
+                          record.status
+                        )}`}
+                      >
                         {record.status}
                       </span>
                     )}
-                    
-                    <motion.span 
+
+                    <motion.span
                       initial={{ color: "#64748b" }}
                       animate={{ color: ["#64748b", "#4ade80", "#64748b"] }}
                       transition={{ duration: 1, repeat: 2 }}

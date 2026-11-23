@@ -46,14 +46,14 @@ export const MissionControl = () => (
           Mission Directive
         </h3>
         <p className="text-sm md:text-base font-mono text-slate-200 leading-relaxed">
-          Developing web systems that improve operations, reporting, and decision-making.
+          Developing web systems that improve operations, reporting, and
+          decision-making.
         </p>
       </div>
     </div>
 
     {/* Row Bawah: Satu Kotak Penuh untuk Core Stack + Metrik Highlight di Header */}
     <div className="border border-white/10 rounded-xl p-6 bg-white/[0.02] flex flex-col justify-center">
-      
       {/* Header Bar: Rata Kiri & Rata Kanan */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-3 mb-4">
         <h3 className="text-[10px] font-mono uppercase tracking-widest text-slate-500">
@@ -67,33 +67,71 @@ export const MissionControl = () => (
         </div>
       </div>
 
-      {/* Grid 4 Kolom di Area Penuh */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        {/* Next.js */}
-        <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-white/[0.03] border border-white/5 hover:border-white/20 transition-all">
-          <img src="/nextjs.png" alt="Next.js" className="w-5 h-5 object-contain shrink-0" />
-          <span className="text-xs font-mono text-slate-200">Next.js</span>
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        <div className="sm:order-1 min-w-0 flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-3 rounded-lg bg-white/[0.03] border border-white/5 hover:border-white/20 transition-all">
+          <img
+            src="/nextjs.png"
+            alt="Next.js"
+            className="w-5 h-5 object-contain shrink-0"
+          />
+          <span className="text-xs font-mono text-slate-200 truncate">
+            Next.js
+          </span>
         </div>
 
-        {/* Laravel */}
-        <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-white/[0.03] border border-white/5 hover:border-white/20 transition-all">
-          <img src="/laravel.webp" alt="Laravel" className="w-5 h-5 object-contain shrink-0" />
-          <span className="text-xs font-mono text-slate-200">Laravel</span>
+        <div className="sm:order-4 min-w-0 flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-3 rounded-lg bg-white/[0.03] border border-white/5 hover:border-white/20 transition-all">
+          <img
+            src="/react.png"
+            alt="React"
+            className="w-5 h-5 object-contain shrink-0"
+          />
+          <span className="text-xs font-mono text-slate-200 truncate">
+            React
+          </span>
         </div>
 
-        {/* PHP */}
-        <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-white/[0.03] border border-white/5 hover:border-white/20 transition-all">
-          <img src="/php.png" alt="PHP" className="w-5 h-5 object-contain shrink-0" />
-          <span className="text-xs font-mono text-slate-200">PHP</span>
+        <div className="sm:order-2 min-w-0 flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-3 rounded-lg bg-white/[0.03] border border-white/5 hover:border-white/20 transition-all">
+          <img
+            src="/laravel.webp"
+            alt="Laravel"
+            className="w-5 h-5 object-contain shrink-0"
+          />
+          <span className="text-xs font-mono text-slate-200 truncate">
+            Laravel
+          </span>
         </div>
 
-        {/* Tailwind CSS */}
-        <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-white/[0.03] border border-white/5 hover:border-white/20 transition-all">
-          <img src="/tailwind.png" alt="Tailwind CSS" className="w-5 h-5 object-contain shrink-0" />
-          <span className="text-xs font-mono text-slate-200">Tailwind</span>
+        <div className="sm:order-5 min-w-0 flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-3 rounded-lg bg-white/[0.03] border border-white/5 hover:border-white/20 transition-all">
+          <img
+            src="/php.png"
+            alt="PHP"
+            className="w-5 h-5 object-contain shrink-0"
+          />
+          <span className="text-xs font-mono text-slate-200 truncate">PHP</span>
+        </div>
+
+        <div className="sm:order-3 min-w-0 flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-3 rounded-lg bg-white/[0.03] border border-white/5 hover:border-white/20 transition-all">
+          <img
+            src="/typescript.png"
+            alt="TypeScript"
+            className="w-5 h-5 object-contain shrink-0"
+          />
+          <span className="text-xs font-mono text-slate-200 truncate">
+            TypeScript
+          </span>
+        </div>
+
+        <div className="sm:order-6 min-w-0 flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-3 rounded-lg bg-white/[0.03] border border-white/5 hover:border-white/20 transition-all">
+          <img
+            src="/tailwind.png"
+            alt="Tailwind CSS"
+            className="w-5 h-5 object-contain shrink-0"
+          />
+          <span className="text-xs font-mono text-slate-200 truncate">
+            Tailwind
+          </span>
         </div>
       </div>
-
     </div>
   </motion.div>
 );
