@@ -1,7 +1,100 @@
 "use client";
 
 import { TypewriterHeader } from "@/components/ui/TypewriterHeader";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
+
+const coreStacks = [
+  {
+    name: "Next.js",
+    icon: "/nextjs.png",
+    orderClass: "sm:order-1",
+  },
+  {
+    name: "React",
+    icon: "/react.png",
+    orderClass: "sm:order-4",
+  },
+  {
+    name: "Laravel",
+    icon: "/laravel.webp",
+    orderClass: "sm:order-2",
+  },
+  {
+    name: "PHP",
+    icon: "/php.png",
+    orderClass: "sm:order-5",
+  },
+  {
+    name: "TypeScript",
+    icon: "/typescript.png",
+    orderClass: "sm:order-3",
+  },
+  {
+    name: "Tailwind",
+    icon: "/tailwind.png",
+    orderClass: "sm:order-6",
+  },
+];
+
+const gridContainerVariants: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.22,
+      delayChildren: 0.3,
+    },
+  },
+};
+
+const cardRevealVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    clipPath: "inset(0% 100% 0% 0%)",
+  },
+  visible: {
+    opacity: 1,
+    clipPath: "inset(0% 0% 0% 0%)",
+    transition: {
+      duration: 1.05,
+      ease: [0.4, 0, 0.2, 1],
+    },
+  },
+};
+
+const scanlineVariants: Variants = {
+  hidden: {
+    left: "0%",
+    opacity: 0,
+  },
+  visible: {
+    left: ["0%", "100%"],
+    opacity: [0, 1, 1, 0],
+    transition: {
+      duration: 1.05,
+      ease: [0.4, 0, 0.2, 1],
+      opacity: {
+        duration: 1.05,
+        times: [0, 0.1, 0.85, 1],
+      },
+    },
+  },
+};
+
+const iconPopVariants: Variants = {
+  hidden: {
+    scale: 0.4,
+    opacity: 0,
+  },
+  visible: {
+    scale: [0.4, 1.25, 1],
+    opacity: 1,
+    transition: {
+      duration: 0.45,
+      ease: "easeOut",
+      delay: 0.52,
+    },
+  },
+};
 
 export const MissionControl = () => (
   <motion.div
@@ -14,9 +107,7 @@ export const MissionControl = () => (
   >
     <TypewriterHeader text="ACTIVE WORKSPACE // MISSION_CONTROL" />
 
-    {/* Row Atas: Status & Mission */}
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-2">
-      {/* Current Status */}
       <div className="border border-white/10 rounded-xl p-6 bg-white/[0.02]">
         <h3 className="text-[10px] font-mono uppercase tracking-widest text-slate-500 mb-4 border-b border-white/10 pb-2">
           Current Status
@@ -40,7 +131,6 @@ export const MissionControl = () => (
         </ul>
       </div>
 
-      {/* Mission Directive */}
       <div className="border border-white/10 rounded-xl p-6 bg-white/[0.02] flex flex-col justify-center">
         <h3 className="text-[10px] font-mono uppercase tracking-widest text-slate-500 mb-4 border-b border-white/10 pb-2">
           Mission Directive
@@ -52,86 +142,50 @@ export const MissionControl = () => (
       </div>
     </div>
 
-    {/* Row Bawah: Satu Kotak Penuh untuk Core Stack + Metrik Highlight di Header */}
     <div className="border border-white/10 rounded-xl p-6 bg-white/[0.02] flex flex-col justify-center">
-      {/* Header Bar: Rata Kiri & Rata Kanan */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-3 mb-4">
         <h3 className="text-[10px] font-mono uppercase tracking-widest text-slate-500">
           Core Stack Environment
         </h3>
 
-        {/* Highlight Pill Badge Rata Kanan */}
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-[10px] font-mono tracking-wider">
           <span className="h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse" />
           <span>3+ SYSTEMS DEVELOPED</span>
         </div>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-        <div className="sm:order-1 min-w-0 flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-3 rounded-lg bg-white/[0.03] border border-white/5 hover:border-white/20 transition-all">
-          <img
-            src="/nextjs.png"
-            alt="Next.js"
-            className="w-5 h-5 object-contain shrink-0"
-          />
-          <span className="text-xs font-mono text-slate-200 truncate">
-            Next.js
-          </span>
-        </div>
+      <motion.div
+        variants={gridContainerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.15 }}
+        className="grid grid-cols-2 sm:grid-cols-3 gap-3"
+      >
+        {coreStacks.map((stack) => (
+          <motion.div
+            key={stack.name}
+            variants={cardRevealVariants}
+            style={{ willChange: "clip-path, opacity" }}
+            className={`${stack.orderClass} relative overflow-hidden min-w-0 flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-3 rounded-lg bg-white/[0.03] border border-white/5 hover:border-white/20 transition-colors`}
+          >
+            <motion.span
+              variants={scanlineVariants}
+              className="pointer-events-none absolute top-0 bottom-0 w-[2px] bg-green-400 shadow-[0_0_8px_#4ade80]"
+            />
 
-        <div className="sm:order-4 min-w-0 flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-3 rounded-lg bg-white/[0.03] border border-white/5 hover:border-white/20 transition-all">
-          <img
-            src="/react.png"
-            alt="React"
-            className="w-5 h-5 object-contain shrink-0"
-          />
-          <span className="text-xs font-mono text-slate-200 truncate">
-            React
-          </span>
-        </div>
+            <motion.img
+              src={stack.icon}
+              alt={stack.name}
+              variants={iconPopVariants}
+              className="w-5 h-5 object-contain shrink-0"
+            />
 
-        <div className="sm:order-2 min-w-0 flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-3 rounded-lg bg-white/[0.03] border border-white/5 hover:border-white/20 transition-all">
-          <img
-            src="/laravel.webp"
-            alt="Laravel"
-            className="w-5 h-5 object-contain shrink-0"
-          />
-          <span className="text-xs font-mono text-slate-200 truncate">
-            Laravel
-          </span>
-        </div>
-
-        <div className="sm:order-5 min-w-0 flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-3 rounded-lg bg-white/[0.03] border border-white/5 hover:border-white/20 transition-all">
-          <img
-            src="/php.png"
-            alt="PHP"
-            className="w-5 h-5 object-contain shrink-0"
-          />
-          <span className="text-xs font-mono text-slate-200 truncate">PHP</span>
-        </div>
-
-        <div className="sm:order-3 min-w-0 flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-3 rounded-lg bg-white/[0.03] border border-white/5 hover:border-white/20 transition-all">
-          <img
-            src="/typescript.png"
-            alt="TypeScript"
-            className="w-5 h-5 object-contain shrink-0"
-          />
-          <span className="text-xs font-mono text-slate-200 truncate">
-            TypeScript
-          </span>
-        </div>
-
-        <div className="sm:order-6 min-w-0 flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-3 rounded-lg bg-white/[0.03] border border-white/5 hover:border-white/20 transition-all">
-          <img
-            src="/tailwind.png"
-            alt="Tailwind CSS"
-            className="w-5 h-5 object-contain shrink-0"
-          />
-          <span className="text-xs font-mono text-slate-200 truncate">
-            Tailwind
-          </span>
-        </div>
-      </div>
+            <span className="text-xs font-mono text-slate-200 truncate">
+              {stack.name}
+            </span>
+          </motion.div>
+        ))}
+      </motion.div>
     </div>
   </motion.div>
 );

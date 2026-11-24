@@ -90,13 +90,38 @@ export const SystemsArchive = () => {
           </h3>
         </div>
 
-        <div className="flex-1 p-3 md:p-4 space-y-3">
-          {systemRecords.map((record) => {
+        <div className="flex-1 p-3 md:p-4 space-y-3 overflow-hidden">
+          {systemRecords.map((record, idx) => {
             const isExpanded = expandedId === record.id;
+            // Urutan terbalik: PJT-05 (index terakhir) jatuh pertama, PJT-01 mendarat paling atas
+            const reverseIdx = systemRecords.length - 1 - idx;
+            const dropDelay = 0.2 + reverseIdx * 0.22;
+
             return (
-              <div
+              <motion.div
                 key={record.id}
-                className={`border rounded-lg transition-all duration-200 overflow-hidden ${
+                initial={{
+                  opacity: 0,
+                  y: -85,
+                  boxShadow: "0 0 0px rgba(74, 222, 128, 0)",
+                }}
+                animate={{
+                  opacity: [0, 1, 1, 1],
+                  y: [-85, 0, -2.5, 0],
+                  boxShadow: [
+                    "0 0 0px rgba(74, 222, 128, 0)",
+                    "0 4px 14px rgba(74, 222, 128, 0.16)",
+                    "0 1px 4px rgba(74, 222, 128, 0.06)",
+                    "0 0 0px rgba(74, 222, 128, 0)",
+                  ],
+                }}
+                transition={{
+                  duration: 0.46,
+                  delay: dropDelay,
+                  times: [0, 0.72, 0.86, 1],
+                  ease: ["easeIn", "easeOut", "easeIn"],
+                }}
+                className={`border rounded-lg transition-colors duration-200 overflow-hidden ${
                   isExpanded
                     ? "border-slate-500/50 bg-white/[0.05]"
                     : "border-white/10 hover:border-white/20 bg-white/[0.01]"
@@ -151,7 +176,7 @@ export const SystemsArchive = () => {
                     <motion.span
                       initial={{ color: "#64748b" }}
                       animate={{ color: ["#64748b", "#4ade80", "#64748b"] }}
-                      transition={{ duration: 1, repeat: 2 }}
+                      transition={{ duration: 1, repeat: 2, delay: 1.5 }}
                       className="text-[10px] md:text-xs w-4 text-center"
                     >
                       {isExpanded ? "▲" : "▼"}
@@ -197,7 +222,7 @@ export const SystemsArchive = () => {
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </div>
+              </motion.div>
             );
           })}
         </div>
