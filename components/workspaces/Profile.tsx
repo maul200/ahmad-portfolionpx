@@ -154,8 +154,8 @@ export const Profile = () => {
                 <ul className="text-slate-300 font-mono text-xs md:text-sm space-y-2 whitespace-nowrap">
                   <li>{">"} Figma</li>
                   <li>{">"} Power Designer</li>
-                  <li>{">"} MySQL</li>
-                  <li>{">"} Laragon</li>
+                  <li>{">"} HeidiSQL</li>
+                  <li>{">"} Taiga</li>
                 </ul>
               </div>
               <div>

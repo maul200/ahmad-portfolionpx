@@ -104,17 +104,29 @@ export const SystemsArchive = () => {
               >
                 <button
                   onClick={() => setExpandedId(isExpanded ? null : record.id)}
-                  className="w-full text-left p-3 md:p-4 flex flex-wrap sm:flex-nowrap items-center justify-between gap-2 md:gap-4"
+                  className={`w-full text-left p-3 md:p-4 flex items-center justify-between gap-x-2 md:gap-x-4 ${
+                    isExpanded ? "flex-wrap sm:flex-nowrap gap-y-2" : ""
+                  }`}
                 >
-                  <div className="flex items-center gap-2 md:gap-4 flex-1 min-w-0">
-                    <span className="text-[10px] md:text-xs font-mono text-slate-500 shrink-0">
-                      [{isExpanded ? record.role : record.id}]
-                    </span>
-                    <span className="text-xs md:text-sm font-medium text-slate-200 truncate">
-                      {record.name}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2 md:gap-3 shrink-0">
+                  <span className="order-1 text-[10px] md:text-xs font-mono text-slate-500 shrink-0">
+                    [{isExpanded ? record.role : record.id}]
+                  </span>
+
+                  <span
+                    className={`text-xs md:text-sm font-medium text-slate-200 ${
+                      isExpanded
+                        ? "order-3 w-full sm:order-2 sm:w-auto sm:flex-1 sm:min-w-0 leading-snug"
+                        : "order-2 flex-1 min-w-0 truncate"
+                    }`}
+                  >
+                    {record.name}
+                  </span>
+
+                  <div
+                    className={`flex items-center gap-2 md:gap-3 shrink-0 ${
+                      isExpanded ? "order-2 sm:order-3" : "order-3"
+                    }`}
+                  >
                     {isExpanded && record.url ? (
                       <a
                         href={record.url}
